@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR Slappy Bird</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, system-ui, sans-serif;
+    background: linear-gradient(#70c5ce, #a8e0e6);
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 30px; gap: 24px; text-align: center;
+  }
+  h1 {
+    color: white; font-size: clamp(32px, 8vw, 56px); font-weight: 900; letter-spacing: 2px;
+    text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  }
+  .card {
+    background: white; border: 4px solid #000; border-radius: 18px;
+    padding: 24px; box-shadow: 0 8px 0 #000;
+  }
+  #qr { width: 280px; height: 280px; }
+  .url {
+    font-family: monospace; font-size: 14px; color: #333;
+    margin-top: 12px; word-break: break-all;
+  }
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  button, a.btn {
+    font-family: inherit; font-weight: 900; font-size: 18px;
+    padding: 14px 22px; border: 4px solid #000; border-radius: 12px;
+    background: #FF9800; color: white; cursor: pointer;
+    text-shadow: 2px 2px 0 #000; box-shadow: 0 5px 0 #000;
+    text-decoration: none; display: inline-block;
+  }
+  button:active, a.btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #000; }
+  p.hint { color: white; font-weight: 700; max-width: 500px; line-height: 1.4;
+           text-shadow: 1px 1px 0 #000; }
+</style>
+</head>
+<body>
+  <h1>SLAPPY BIRD</h1>
+  <div class="card">
+    <canvas id="qr"></canvas>
+    <div class="url">edo9221.github.io/slappy-ale</div>
+  </div>
+  <p class="hint">Inquadra il QR con la fotocamera del telefono per aprire il gioco, oppure scarica l'immagine per condividerla.</p>
+  <div class="actions">
+    <button onclick="download()">Scarica QR</button>
+    <a class="btn" href="https://edo9221.github.io/slappy-ale/" style="background:#4CAF50">Gioca ora</a>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script>
+  const url = 'https://edo9221.github.io/slappy-ale/';
+  const canvas = document.getElementById('qr');
+  QRCode.toCanvas(canvas, url, {
+    width: 560,
+    margin: 2,
+    color: { dark: '#000000', light: '#ffffff' },
+    errorCorrectionLevel: 'H'
+  }, function (error) {
+    if (error) console.error(error);
+  });
+
+  function download() {
+    const link = document.createElement('a');
+    link.download = 'slappy-bird-qr.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }
+</script>
+</body>
+</html>
